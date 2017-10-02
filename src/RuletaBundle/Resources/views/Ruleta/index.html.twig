@@ -1,0 +1,368 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{parent()}}
+    <style>
+        .container-fluid{
+            margin-top: 100px;
+            margin-left: 100px;
+        }
+        .form-inline{
+            margin-left: 20px;
+        }
+        .h4{
+            font-weight: bold;
+        }
+        .form-inline > .form-group > .total{
+            font-weight: bold;
+            width: 100px;
+        }
+
+        .form-inline > .form-group > .mesas{
+            width: 90px;
+        }
+
+        .tamTotales{
+            font-size: 16px;
+        }
+
+        .container{
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .h1{
+            font-style: inherit
+            
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center" > RULETA </h1>
+    </div>
+    <div class="container-fluid text-center">   
+        <div class="col-md-5">
+            <span class="glyphicon glyphicon-user"></span><label>JUGADOR 1</label>
+            <input type="text" placeholder="identificacion" id="jugador1">
+            <input type="number" disabled="true" placeholder="Dinero" id="jugador1Dinero">
+            <button class="btn-primary" onclick="IniciarSesion('jugador1');" id="Btnjugador1">iniciar sesion</button>
+            <select class="btn" id="jugador1Apuesta" disabled="true" onchange="EscogerColor('jugador1Apuesta');">
+                <option>APUESTA</option>
+                <option >Verde</option>
+                <option >Rojo</option>
+                <option>Negro</option>
+            </select>
+            <select class="btn" onchange="Apostar('jugador1');" id="jugador1porcentaje" disabled true>
+                <option value="0">PORCENTAJE</option>
+                <option value="0.08">8%</option>
+                <option value="0.09">9%</option>
+                <option value="0.1">10%</option>
+                <option value="0.11">11%</option>
+                <option value="0.12">12%</option>
+                <option value="0.13">13%</option>
+                <option value="0.14">14%</option>
+                <option value="0.15">15%</option>
+            </select>
+            <button class="btn btn-danger" id="jugador1ALLIN" disabled="true">ALL IN</button>
+        </div>
+
+        <div class="col-md-5">
+            <span class="glyphicon glyphicon-user"></span><label>JUGADOR 2</label>
+            <input type="text" placeholder="identificacion" id="jugador2" >
+            <input type="number" disabled="true" placeholder="Dinero" id="jugador2Dinero">
+            <button class="btn-primary" onclick="IniciarSesion('jugador2');">iniciar sesion</button>
+            <select class="btn" id="jugador2Apuesta" disabled="true" onchange="EscogerColor('jugador2Apuesta');">
+                <option>APUESTA</option>
+                <option>Verde</option>
+                <option>Rojo</option>
+                <option>Negro</option>
+            </select>
+            <select class="btn" id="jugador2porcentaje" onchange="Apostar('jugador2');" disabled="true">
+                <option>PORCENTAJE</option>
+                <option value="0.08">8%</option>
+                <option value="0.09">9%</option>
+                <option value="0.1">10%</option>
+                <option value="0.11">11%</option>
+                <option value="0.12">12%</option>
+                <option value="0.13">13%</option>
+                <option value="0.14">14%</option>
+                <option value="0.15">15%</option>
+            </select>
+            <button class="btn btn-danger" id="jugador2ALLIN" disabled="true">ALL IN</button>
+        </div>
+    </div>
+    <div class="container col-lg-12 text-center row">
+        <button class="btn btn-danger btn-group-lg" onclick="Ruleta();" id="ruleta" disabled="true">RULETA</button>
+        <input type="number" id="monto" placeholder="TOTAL" disabled="true" value=0>  
+        <button class="btn btn-group-lg btn-danger" onclick="AcabarJuego();" disabled="true" id="AcabarJuego">TERMINAR</button>
+    </div>
+    <div class="container-fluid text-center">
+        <div class="col-md-5 text-center" >
+            <span class="glyphicon glyphicon-user"></span><label>JUGADOR 3</label>
+            <input type="text" placeholder="identificacion" id="jugador3">
+            <input type="number" disabled="true" placeholder="Dinero" id="jugador3Dinero">
+            <button class="btn-primary" onclick="IniciarSesion('jugador3');">iniciar sesion</button>
+            <select class="btn" id="jugador3Apuesta" disabled="true" onchange="EscogerColor('jugador3Apuesta')">
+                <option >APUESTA</option>
+                <option>Verde</option>
+                <option>Rojo</option>
+                <option>Negro</option>
+            </select>
+            <select class="btn" id="jugador3porcentaje" onchange="Apostar('jugador3');" disabled="true">
+                <option>PORCENTAJE</option>
+                <option value="0.08">8%</option>
+                <option value="0.09">9%</option>
+                <option value="0.1">10%</option>
+                <option value="0.11">11%</option>
+                <option value="0.12">12%</option>
+                <option value="0.13">13%</option>
+                <option value="0.14">14%</option>
+                <option value="0.15">15%</option>
+            </select>
+            <button class="btn btn-danger" id="jugador3ALLIN" disabled="true">ALL IN</button>
+        </div>
+        <div class="col-md-5 text-center">
+            <span class="glyphicon glyphicon-user"></span><label>JUGADOR 4</label>
+            <input type="text" placeholder="identificacion" id="jugador4">
+            <input type="number" disabled="true" placeholder="Dinero" id="jugador4Dinero">
+            <button class="btn-primary" onclick="IniciarSesion('jugador4');">iniciar sesion</button>
+            <select class="btn" id="jugador4Apuesta" disabled="true" onchange="EscogerColor('jugador4Apuesta') < ;">
+                <option>APUESTA</option>
+                <option>Verde</option>
+                <option>Rojo</option>
+                <option>Negro</option>
+            </select>
+            <select class="btn" id="jugador4porcentaje "onchange="Apostar('jugador4');" disabled="true" >
+                <option>PORCENTAJE</option>
+                <option value="0.08">8%</option>
+                <option value="0.09">9%</option>
+                <option value="0.1">10%</option>
+                <option value="0.11">11%</option>
+                <option value="0.12">12%</option>
+                <option value="0.13">13%</option>
+                <option value="0.14">14%</option>
+                <option value="0.15">15%</option>
+            </select>
+            <button class="btn btn-danger" id="jugador4ALLIN" disabled="true">ALL IN</button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}    
+    {{ parent() }}
+    <script type="text/javascript">
+
+        var NumerodeJugadores = 0;
+        var ApuestaNumero1 = 0;
+        var ApuestaNumero2 = 0;
+        var ApuestaNumero3 = 0;
+        var ApuestaNumero4 = 0;
+        var JugadoresApostando = [];
+
+
+        function IniciarSesion(id) {
+            var alias1 = $('#jugador1').val();
+            var alias2 = $('#jugador2').val();
+            var alias3 = $('#jugador3').val();
+            var alias4 = $('#jugador4').val();
+            var identificacion = $("#" + id).val();
+            var contraseña = prompt("ingrese contraseña");
+            $.ajax({
+                url: "{{path('Iniciar_Sesion')}}",
+                data: ({identificacion: identificacion, password: contraseña}),
+                method: 'POST',
+                dataType: "json",
+                success: function (data) {
+                    if (data === -1 || data === null) {
+
+                        alert('CONTRASEÑA EQUIVOCADA O EL USUARIO NO EXISTE ');
+                    } else
+                    {
+                        var aliasc = data["alias"];
+                        if (aliasc === alias1 || aliasc === alias2 || aliasc === alias3 || aliasc === alias4)
+                        {
+                            alert("Este usuario ya esta en uso");
+                        } else
+                        {
+                            $("#" + id).val(data["alias"]);
+                            $("#" + id).attr('disabled', true);
+                            $("#" + id + "Dinero").val(data["dinero"]);
+                            $("#" + id + "porcentaje").attr('disabled', false);
+                            $("#" + id + "Apuesta").attr('disabled', false);
+                            JugadoresApostando[NumerodeJugadores] = id;
+                            NumerodeJugadores++;
+                            if (NumerodeJugadores === 2) {
+                                $("#ruleta").attr('disabled', false);
+                            }
+                        }
+                    }
+
+                }
+
+
+
+            });
+        }
+
+        function Apostar(id) {
+            $("#AcabarJuego").attr('disabled', true);
+            var claveporcentaje = id + "porcentaje";
+            var claveDinero = id + "Dinero";
+            var porcentaje = $("#" + claveporcentaje).val();
+            var dinero = $("#" + claveDinero).val();
+            var monto = $("#monto").val();
+            if (dinero <= 1000) {
+                var apuesta = dinero;
+                $("#" + claveDinero).val("0");
+                $("#monto").val(parseInt(monto) + parseInt(apuesta));
+                $("#" + id).attr("disabled", true);
+                $("#" + id + "ALLIN").attr('disabled', false);
+
+            } else {
+                if (dinero === 0) {
+                    alert("El" + id + "no tiene mas dinero");
+                    $("#" + id).val("");
+                    $("#" + id + "Apuesta").attr('disabled', true);
+                    $("#" + id + "porcentaje").attr('disabled', true);
+                } else {
+                    var apuesta = parseInt(dinero) * parseFloat(porcentaje);
+                    var Restante = parseInt(dinero) - parseInt(apuesta);
+                    $("#" + claveDinero).val(Restante);
+                    $("#monto").val(parseInt(monto) + parseInt(apuesta));
+                    $("#" + claveporcentaje).attr("disabled", true);
+                    $("#AcabarJuego").attr('disabled', true);
+                }
+
+
+            }
+
+
+        }
+
+        function EscogerColor(id) {
+
+            $('#' + id).attr('disabled', true);
+
+        }
+        function AcabarJuego()
+        {
+            var Jugadores = [];
+            var Dineros = [];
+            for (var i = 0; i < NumerodeJugadores; i++) {
+                Jugadores [i] = $("#jugador" + (i + 1)).val();
+                Dineros [i] = $("#jugador" + (i + 1) + "Dinero").val();
+
+            }
+
+            $.ajax({
+                url: "{{path('acabar_juego')}}",
+                data: (({alias: JSON.stringify(Jugadores), Totales: JSON.stringify(Dineros), jugadores: NumerodeJugadores})),
+                method: 'POST',
+                dataType: "json",
+                success: function (data) {
+                    if (data === 1) {
+                        swal('FINAL DEL JUEGO','Gracias por jugar', 'sucess');
+                        for (var i = 1; i <= NumerodeJugadores; i++) {
+                            Jugadores [i] = $("#jugador" + i).val("");
+                            Dineros [i] = $("#jugador" + i + "Dinero").val("0");
+                            Dineros [i] = $("#jugador" + i + "Apuesta").attr('disabled', true);
+                            Dineros [i] = $("#jugador" + i + "porcentaje").attr('disabled', true);
+                            $("#AcabarJuego").attr('disabled', true);
+
+                        }
+
+                    }
+                }
+
+            });
+        }
+
+        function Ruleta() {
+
+            var ganador = 0;
+            var ganadores = [];
+            var total = $("#monto").val();
+            var contadorG = 0;
+
+            var Color = Math.floor((Math.random() * 10) + 1);
+            switch (Color) {
+                case 1:
+                    ganador = "Negro";
+                    break;
+                case 2:
+                    ganador = "Rojo";
+                    break;
+                case 3:
+                    ganador = "Negro";
+                    break;
+                case 4:
+                    ganador = "Rojo";
+                    break;
+                case 5:
+                    ganador = "Negro";
+                    break;
+                case 6:
+                    ganador = "Rojo";
+                    break;
+                case 7:
+                    ganador = "Rojo";
+                    break;
+                case 8:
+                    ganador = "Negro";
+                    break;
+                case 9:
+                    ganador = "Negro";
+                    break;
+                default :
+                    ganador = "Verde";
+
+            }
+
+
+            for (var i = 0; i < NumerodeJugadores; i++) {
+                var jugador = JugadoresApostando[i] + "Apuesta";
+                $("#" + JugadoresApostando[i] + "Apuesta").attr('disabled', false);
+                $("#" + JugadoresApostando[i] + "porcentaje").attr('disabled', false);
+                var colorA = $('#' + jugador).val();
+                if (colorA === ganador) {
+                    ganadores [contadorG] = JugadoresApostando[i];
+                    contadorG++;
+                }
+            }
+            if (ganador === 'Negro' || ganador === 'Rojo') {
+
+                for (var j = 0; j < contadorG; j++) {
+                    var CampoDinero = $("#" + ganadores[j] + "Dinero");
+                    var Premio = (total * 2) / contadorG;
+                    var NuevoDinero = parseInt(CampoDinero.val()) + parseInt(Premio);
+                    CampoDinero.val(NuevoDinero);
+                }
+                 swal("FIN DE RONDA", "MONTO:"+ " " + total + " "+"COLOR:"+" "+ ganador +"  " + "GANADORES"+ " " +contadorG, "info");
+                $("#AcabarJuego").attr('disabled', false);
+                $("#monto").val("0");
+
+
+            } else {
+                for (var k = 0; k < contadorG; k++) {
+                    var CampoDinero = $("#" + ganadores[k] + "Dinero");
+                    var Premio = (total * 15 / contadorG);
+                    var NuevoDinero = parseInt(CampoDinero.val()) + parseInt(Premio);
+                    CampoDinero.val(NuevoDinero);
+
+
+
+                }
+                 swal("FIN DE RONDA", "COLOR:"+" "+ ganador +"  " + "GANADORES"+ " " +contadorG, "info");
+                $("#AcabarJuego").attr('disabled', false);
+                $("#monto").val("0");
+
+            }
+        }
+
+
+
+
+
+    </script>
+{% endblock %}

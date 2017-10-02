@@ -1,0 +1,13 @@
+ruleta:
+    resource: "@RuletaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+jugador:
+    resource: "@JugadorBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

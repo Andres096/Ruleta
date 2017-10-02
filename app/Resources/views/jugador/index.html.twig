@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{parent()}}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">Lista de jugadores</h1>
+            </div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Identificacion</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Dinero</th>
+                <th>Alias</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for jugador in jugadors %}
+                <tr>
+                    <td>{{ jugador.identificacion }}</td>
+                    <td>{{ jugador.nombre }}</td>
+                    <td>{{ jugador.apellido }}</td>
+                    <td>{{ jugador.dinero }}</td>
+                    <td>{{ jugador.alias }}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('jugador_show', { 'id': jugador.id }) }}">Mostrar</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('jugador_edit', { 'id': jugador.id }) }}">Editar</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+   
+            <button class="btn-primary"> <a href="{{ path('jugador_new') }}">CREAR JUGADOR</a></button>
+            <button class="btn btn-success"><a href="{{path('index_ruleta')}}">JUGAR RULETA</a></button>
+        
+{% endblock %}
